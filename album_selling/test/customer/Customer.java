@@ -21,23 +21,18 @@ public class Customer {
     private String address;
     private String provice;
     private String postcode;
-    private String status;
     private final String userIdAdmin = "00000";
     private final String userIdCustomer = "10000";
     public void register (String username, String password, String firstName, String lastName, String phoneNo, String address, String provice, String postcode) {
         
         customer = new Customer();
-        
+        customer.setUserId(userId);
+        customer.setUsername(username);
+        customer.setFirstName(firstName);
+        customer.setLastName(lastName);
+        customer.setPasswoed(password);
         //userId have 5 number , start 00000 - 09999 = admin
-        userId = userIdAdmin;
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNo = phoneNo;
-        this.address = address;
-        this.provice = provice;
-        this.postcode = postcode;
+        
     }
     
     public void updateInfo( ){
