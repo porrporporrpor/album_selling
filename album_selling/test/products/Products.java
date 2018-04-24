@@ -16,6 +16,8 @@ public class Products {
     private String productDescription;
     private double productPrice;
     private String productImg;
+    private String artist;
+    private String linkEx;
     
     public void addProduct(){
         

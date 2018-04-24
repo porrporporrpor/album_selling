@@ -6,6 +6,7 @@
 package cart;
 import java.util.List;
 import products.Invoice;
+import products.Products;
 
 /**
  *
@@ -17,7 +18,7 @@ public class ShoppingCart {
     private List lisProduct;
     private int quantity;
     
-    public void addCart(){
+    public void addProductToCart(Products product, int quantity){
         
     }
     
