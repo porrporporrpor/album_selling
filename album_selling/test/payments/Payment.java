@@ -18,8 +18,9 @@ import java.util.logging.Logger;
  * @author porx
  */
 public class Payment {
-    private int invoiceId;
-    private Double amount;
+    private int invoice_number;
+    private String customer_name;
+    private Double balance;
     private Connection conn;
 
 
@@ -27,17 +28,19 @@ public class Payment {
         
     }
     
-    public void addPayment(int invoiceId, Double amount) {
-        this.invoiceId = invoiceId;
-        this.amount = amount;
+    public void addPayment(int invoice_number,String customer_name, Double balance) {
+        this.invoice_number = invoice_number;
+        this.customer_name = customer_name;
+        this.balance = balance;
         
         try {
-            String sql = "insert into payments(invoiceId, amount) values(?,?)";
+            String sql = "insert into payments(invoice_number, customer_name, balance) values(?,?,?)";
             PreparedStatement rstmt = conn.prepareStatement(sql);
-            rstmt.setInt(1, invoiceId);
-            rstmt.setDouble(2, amount);
+            rstmt.setInt(1, invoice_number);
+            rstmt.setString(2, customer_name);
+            rstmt.setDouble(3, balance);
             rstmt.executeUpdate();
-            System.out.println("success");
+            System.out.println("inserted payment susscess!");
         } catch (SQLException ex) {
             Logger.getLogger(Payment.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -45,20 +48,28 @@ public class Payment {
         
     }
 
-    public int getInvoiceId() {
-        return invoiceId;
+    public int getInvoice_number() {
+        return invoice_number;
     }
 
-    public void setInvoiceId(int invoiceId) {
-        this.invoiceId = invoiceId;
+    public void setInvoice_number(int invoice_number) {
+        this.invoice_number = invoice_number;
     }
 
-    public Double getAmount() {
-        return amount;
+    public String getCustomer_name() {
+        return customer_name;
     }
 
-    public void setAmount(Double amount) {
-        this.amount = amount;
+    public void setCustomer_name(String customer_name) {
+        this.customer_name = customer_name;
+    }
+
+    public Double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Double balance) {
+        this.balance = balance;
     }
 
     

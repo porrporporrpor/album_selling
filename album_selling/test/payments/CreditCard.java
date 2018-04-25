@@ -18,19 +18,19 @@ import java.util.logging.Logger;
  * @author porx
  */
 public class CreditCard extends Payment{
-    private String nameCard;
+    private String card_number;
     private String ccv;
-    private String cardNo;
-    private String expDate;
+    private String card_name;
+    private String card_expiry_date;
     
     private Connection conn;
 
-    public String getNameCard() {
-        return nameCard;
+    public String getCard_name() {
+        return card_name;
     }
 
-    public void setNameCard(String nameCard) {
-        this.nameCard = nameCard;
+    public void setCard_name(String card_name) {
+        this.card_name = card_name;
     }
 
     public String getCcv() {
@@ -41,37 +41,41 @@ public class CreditCard extends Payment{
         this.ccv = ccv;
     }
 
-    public String getCardNo() {
-        return cardNo;
+    public String getCard_number() {
+        return card_number;
     }
 
-    public void setCardNo(String cardNo) {
-        this.cardNo = cardNo;
+    public void setCard_number(String card_number) {
+        this.card_number = card_number;
     }
 
-    public String getExpDate() {
-        return expDate;
+    public String getCard_expiry_datepDate() {
+        return card_expiry_date;
     }
 
-    public void setExpDate(String expDate) {
-        this.expDate = expDate;
+    public void setCard_expiry_date(String card_expiry_date) {
+        this.card_expiry_date = card_expiry_date;
     }
     
-    public int addCreditCard(CreditCard credit, String nameCard, String ccv, String cardNo, String expDate) {
-        this.nameCard = nameCard;
+    public int addCreditCard(CreditCard credit, String card_number, String card_name, String ccv, String card_expiry_date) {
+        this.card_name = card_name;
         this.ccv = ccv;
-        this.cardNo = cardNo;
-        this.expDate = expDate;
+        this.card_number = card_number;
+        this.card_expiry_date = card_expiry_date;
         int returnCode=0;
         this.conn = credit.getConnection();
         
         try {
-            String sql = "insert into creditCards(invoiceId, nameCard, cardNo, ccv, ecpDate) values(?,?,?,?,?)";
+            String sql = "insert into creditCards(invoice_number, card_number, card_name, ccv, card_expiry_date) values(?,?,?,?,?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, credit.getInvoiceId());
-            pstmt.setString(2, nameCard);
-            pstmt.setString(3, cardNo);
-            pstmt.setString(4, expDate);
+            pstmt.setInt(1, credit.getInvoice_number());
+            pstmt.setString(2, card_number);
+            pstmt.setString(3, card_name);
+            pstmt.setString(4, ccv);
+            pstmt.setString(5, card_expiry_date);
+            
+            System.out.println("credit card inserted into database!");
+            pstmt.executeUpdate();
             
         } catch (SQLException ex) {
             Logger.getLogger(CreditCard.class.getName()).log(Level.SEVERE, null, ex);
