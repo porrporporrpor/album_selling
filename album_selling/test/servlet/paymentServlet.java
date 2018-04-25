@@ -39,7 +39,9 @@ import payments.Payment;
 public class paymentServlet extends HttpServlet {
 
     private Connection conn;
-    private static int invoiceId = 90007;
+    private static int invoice_number = 90007;
+    private static String customer_name = "JSON";
+    private static double balance = 12000;
     private final String UPLOAD_DIRECTORY = "/Users/porx/NetBeansProjects/webpro_project/web/images/pp_test";
 
     public void init() {
@@ -61,41 +63,37 @@ public class paymentServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
 
-            //set invoiceId to session for test dev
+            //set attribute to session for test dev
             HttpSession session = request.getSession();
-            session.setAttribute("invoiceId", invoiceId);
-            out.println(invoiceId);
+            session.setAttribute("invoice_number", invoice_number);
+            session.setAttribute("customer_name", customer_name);
+            session.setAttribute("balance", balance);
+            System.out.println("invoice number : " + invoice_number);
+            System.out.println("customer name : " + customer_name);
+            System.out.println("balance : " + balance);
 
-            // get parameter from payment.html
+            // get parameter from payment.html for check is money tranfer or credit card
             String operation = request.getParameter("operation");
-            out.println(operation);
+            System.out.println(operation);
+            
             int returnCode;
 
+            // check is money tranfer or credit card
             if (operation.equals("ชำระเงิน1")) { //money tranfer
-                String time = request.getParameter("time");
                 Part filePart = request.getPart("file");
-                String bankName = request.getParameter("bank");
+                String bank = request.getParameter("bank");
                 Double money = Double.parseDouble(request.getParameter("money"));
-                String date = request.getParameter("date");
+                String transfer_date = request.getParameter("date");
+                String transfer_time = request.getParameter("time");
 
-                // set filePart to InputStream  
+                // set filePart to InputStream (image from payment.html) 
                 InputStream inputStream = filePart.getInputStream();
-//
-//            // set default output file name and path directory
-//            File path = new File("/Users/porx/NetBeansProjects/webpro_project/web/images/pp_test/" + invoiceId + ".png");
-//            FileOutputStream outputStream = new FileOutputStream(path);
-//
-//            // write image file
-//            byte[] buffer = new byte[1024];
-//            while (inputStream.read(buffer) > 0) {
-//                outputStream.write(buffer);
-//            }
 
                 MoneyTranfer payment = new MoneyTranfer();
                 payment.setConnection(conn);
-                payment.addPayment(invoiceId, money);
+                payment.addPayment(invoice_number, customer_name, balance);
 
-                returnCode = payment.addImage(payment, inputStream);
+                returnCode = payment.addImage(payment, bank, transfer_date, transfer_time, inputStream);
             } else { //credit card
                 String nameCard = request.getParameter("name");
                 String cardNo = request.getParameter("number");
@@ -104,6 +102,7 @@ public class paymentServlet extends HttpServlet {
 
                 CreditCard payment = new CreditCard();
                 payment.setConnection(conn);
+                payment.addPayment(invoice_number, customer_name, balance);
 
                 returnCode = payment.addCreditCard(payment, nameCard, cardNo, cvv, expDate);
             }
@@ -124,7 +123,7 @@ public class paymentServlet extends HttpServlet {
                 getServletContext().getRequestDispatcher("/jsp/fail.jsp").forward(request, response);
             } else {
                 request.setAttribute("message", "your image inserted fully");
-                getServletContext().getRequestDispatcher("/jsp/success.jsp").forward(request, response);
+                getServletContext().getRequestDispatcher("/finish_payment.html").forward(request, response);
             }
 
         }
