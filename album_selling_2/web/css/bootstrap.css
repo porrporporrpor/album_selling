@@ -1106,7 +1106,7 @@ a {
 }
 a:hover,
 a:focus {
-  color: #23527c;
+  background-color: #f0b28d;
   text-decoration: underline;
 }
 a:focus {

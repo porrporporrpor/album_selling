@@ -12,6 +12,9 @@
             function hideURLbar(){ window.scrollTo(0,1); } </script>
         <!-- //for-mobile-apps --> 
         <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+        
+        <link href="css/reset.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="css/popup.css" rel="stylesheet" type="text/css" media="all" />
         <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
         <!-- font-awesome icons -->
         <link href="css/font-awesome.css" rel="stylesheet" type="text/css" media="all" />
@@ -178,7 +181,7 @@
 
 
 
-                                        <form enctype="multipart/form-data" action="servletPayment" method="POST">
+                                        <form enctype="multipart/form-data" action="servletPayment" method="POST" id="transfer">
 
                                             <label class="control-label">ธนาคารที่โอน</label><br>
                                             <select name="bank">
@@ -216,7 +219,18 @@
 
 
                                             <label>เลือกหลักฐานการโอนเงิน</label><input name="file" type="file" ><br>
-                                            <input type="submit" value="   ชำระเงิน   " >
+                                            <a href="#0" class="cd-popup-trigger">แจ้งการชำระเงิน</a>
+                                            <div class="cd-popup is-vi" role="alert">
+<div class="cd-popup-container">
+<p>ยืนยันการแจ้งการชำระเงิน?</p>
+<ul class="cd-buttons">
+<li><a onclick="document.getElementById('transfer').submit();"> ยืนยัน </a></li>
+
+<li><a href="#0">ไม่</a></li>
+</ul>
+<a href="#0" class="cd-popup-close img-replace">Close</a>
+</div> 
+</div>
                                         </form>
 
 
@@ -226,7 +240,7 @@
                                 </div>
                                 <div><!--ตัดบัตร-->
                                     <div class="vertical_post check_box_agile">
-                                        <form action="paymentServlet" method="POST">
+                                        <form action="paymentServlet" method="POST" id="fromcard">
                                             <section class="creditly-wrapper wthree, w3_agileits_wrapper">
                                                 <div class="credit-card-wrapper">
                                                     <div class="first-row form-group">
@@ -257,7 +271,8 @@
 
                                                         <label class="control-label">วันหมดอายุ</label>
                                                         <input class="expiration-month-and-year form-control" type="text" name="expiration-month-and-year" placeholder="ดด / ปป">
-                                                        <input type="submit" value="   ชำระเงิน   " >
+                                                        <a href="#0" class="cd-popup-trigger">ชำระเงิน</a>
+                                                        <!-- <input type="submit" value="   ชำระเงิน   " > -->
 
 
                                                     </div>
@@ -265,7 +280,17 @@
                                                 </div>
 
                                             </section>
+<div class="cd-popup is-vi" role="alert">
+<div class="cd-popup-container">
+<p>ยืนยันการชำระเงิน?</p>
+<ul class="cd-buttons">
+<li><a onclick="document.getElementById('fromcard').submit();"> ยืนยัน </a></li>
 
+<li><a href="#0">ไม่</a></li>
+</ul>
+<a href="#0" class="cd-popup-close img-replace">Close</a>
+</div> 
+</div>
                                         </form>
 
                                     </div>              
@@ -305,6 +330,7 @@
                 <div class="clearfix"> </div>
             </div>
         </div>
+
         <!-- //newsletter -->
         <!-- footer -->
 
@@ -441,5 +467,7 @@
             });
 
         </script>
+        <script type="text/javascript" src="js/modernizr.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
     </body>
 </html>
